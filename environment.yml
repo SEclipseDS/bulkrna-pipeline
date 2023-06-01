@@ -1,0 +1,18 @@
+name: bmipreproc
+channels:
+  - conda-forge
+  - bioconda
+  - anaconda
+  - defaults
+dependencies:
+  - snakemake
+  - fastqc
+  - star
+  - rsem
+  - trimmomatic
+  - qualimap
+  - python=3.10
+  - conda-forge::ncurses
+  - bioconda::samtools
+  - snakemake-wrapper-utils
+prefix: /opt/conda/envs/bmipreproc

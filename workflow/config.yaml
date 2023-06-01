@@ -1,0 +1,14 @@
+---
+snakefile: Snakefile
+cores: 8
+latency-wait: 60
+reason: True
+show-failed-logs: True
+keep-going: True
+printshellcmds: True
+rerun-incomplete: True
+restart-times: 3
+
+# path or URL to sample sheet (CSV format, columns: sample, condition, ...)
+samples: config/samples.csv
+genome: config/genome.csv

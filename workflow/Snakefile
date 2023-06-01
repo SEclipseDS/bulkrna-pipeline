@@ -1,0 +1,45 @@
+from snakemake.utils import min_version
+import pandas as pd
+
+##### set minimum snakemake version #####
+min_version("6.4.1")
+
+configfile: "workflow/config.yaml"
+configfile: "workflow/tools.yaml"
+configfile: "workflow/params.yaml"
+
+
+include: "rules/common.smk"
+if config['qc'] == 'fastqc':
+    include: "rules/fastqc.smk"
+
+if config['align'] == 'star':
+    include: "rules/starindex.smk"
+    include: "rules/star.smk"
+    include: "rules/sam.smk"
+elif config['align'] == 'minimap':
+    include: "rules/minimap.smk"
+    if config['miniparams']['useindex'] == True:
+        include: "rules/minindex.smk"
+
+if config['trim'] == 'trimmomatic' and config['ends'] == 'PE':
+    include: "rules/trimPE.smk"
+elif config['trim'] == 'trimmomatic' and config['ends'] == 'SE':
+    include: "rules/trimSE.smk"
+
+if config['trim'] == 'trimgalore' and config['ends'] == 'PE':
+    include: "rules/galorePE.smk"
+elif config['trim'] == 'trimgalore' and config['ends'] == 'SE':
+    include: "rules/galoreSE.smk"
+
+if config['quant'] == 'rsem':
+    include: "rules/rsemindex.smk"
+    include: "rules/rsem.smk"
+elif config['quant'] == 'htseq':
+    include: "rules/htseq.smk"
+elif config['quant'] == 'salmon' and config['reads'] == 'long':
+    include: "rules/salmonlong.smk"
+
+rule all:
+    input:
+        all_input,

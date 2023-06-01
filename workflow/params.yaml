@@ -1,0 +1,40 @@
+# Threads to utilize
+threads: 8
+
+# 'True' if stranded, 'False' if unstranded.
+# ends 'PE' if paired end, 'SE' if single end
+# 'short' if short-read 'long' if long-read
+stranded: True
+ends: PE
+reads: short
+
+# Parameters for tools
+
+# trimmomatic parameters
+trimmparams:
+  adapter: "TRAILING:3"
+  extra: ""
+  compression: "-9"
+ 
+# trim galore parameters
+galoreparams:
+  extra: ""
+
+# star parameters
+starparams: 
+  extra: "--outSAMtype BAM SortedByCoordinate --outSAMheaderCommentFile commentsENCODElong.txt --outSAMheaderHD @HD VN:1.4 SO:coordinate"
+  quant: "--quantMode TranscriptomeSAM"
+
+# rsem parameters
+rsemparams:
+  extra: "--seed 12345 --estimate-rspd --no-bam-output"
+
+salmonparams:
+  extra: ""
+
+# minimap2 parameters
+miniparams:
+  extra: "-ax map-ont --split-prefix=/home/apa/snakemake/tmpfiles/{sample}"  # optional
+  sorting: "coordinate"  # optional: Enable sorting. Possible values: 'none', 'queryname' or 'coordinate'
+  sort_extra: ""  # optional: extra arguments for samtools/picard
+  useindex: True # True or False
